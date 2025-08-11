@@ -1,17 +1,1 @@
-function doGet(e) {
-  if (e && e.parameter && e.parameter.format === 'json') {
-    return getSheetDataAsJson();
-  }
-
-  return HtmlService
-    .createHtmlOutputFromFile('HTML')
-    .setTitle('Archive 47 Inventory')
-    .setFaviconUrl('https://i.imgur.com/Ry4xRFK.png');
-}
-
-function getSheetDataAsJson() {
-  const sheet = SpreadsheetApp.openById('1bUnhcWN-o4n2NnreiOQKQfWi3jTuqGIss-euVeNiwgo').getSheetByName('Sheet1');
-  const data = sheet.getDataRange().getValues();
-  return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(ContentService.MimeType.JSON);
-}
 
