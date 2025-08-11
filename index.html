@@ -3,116 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
- <title>Archive 47 Inventory Dashboard | Tactical Gear & Status Tracker</title>
+  <title>Archive 47 Inventory Dashboard | Tactical Gear & Status Tracker</title>
+  <link rel="icon" href="https://i.imgur.com/Ry4xRFK.png" />
   <style>
     body {
-      font-family: 'Orbitron', sans-serif;
+      font-family: 'Courier New', monospace;
       background-color: #0f1113;
       color: #e0e0e0;
-      padding: 2rem;
+      margin: 0;
+      padding: 20px;
     }
     h1 {
       text-align: center;
       color: #00ff99;
+      margin-bottom: 30px;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 2rem;
+      background-color: #1a1c1f;
     }
-    th, td {
-      border: 1px solid #444;
-      padding: 0.5rem;
-      text-align: left;
-    }
-    th {
-      background-color: #222;
-      color: #00ff99;
-    }
-    tr:nth-child(even) {
-      background-color: #1a1a1a;
-    }
-    form {
-      margin-top: 2rem;
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    input, select, button {
-      padding: 0.5rem;
-      background-color: #222;
-      color: #e0e0e0;
-      border: 1px solid #444;
-    }
-    button {
-      background-color: #00ff99;
-      color: #000;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-  <h1>Archive 47 Inventory</h1>
-
-  <form id="addForm">
-    <input type="text" name="name" placeholder="Item Name" required />
-    <input type="text" name="category" placeholder="Category" required />
-    <select name="status">
-      <option value="Ready">Ready</option>
-      <option value="In Progress">In Progress</option>
-      <option value="Archived">Archived</option>
-    </select>
-    <button type="submit">Add Item</button>
-  </form>
-
-  <table id="inventoryTable">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  <script>
-    const endpoint = 'https://script.google.com/macros/s/AKfycbznpWp1d19JS6QGdLIg7i1W7xMAqB2W7y8O73U-XAM/dev';
-
-    async function loadInventory() {
-      const res = await fetch(endpoint);
-      const data = await res.json();
-      const tbody = document.querySelector('#inventoryTable tbody');
-      tbody.innerHTML = '';
-      data.forEach(row => {
-        const tr = document.createElement('tr');
-        row.forEach(cell => {
-          const td = document.createElement('td');
-          td.textContent = cell;
-          tr.appendChild(td);
-        });
-        tbody.appendChild(tr);
-      });
-    }
-
-    document.getElementById('addForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      const item = {
-        name: formData.get('name'),
-        category: formData.get('category'),
-        status: formData.get('status')
-      };
-      await fetch(endpoint, {
-        method: 'POST',
-        body: JSON.stringify(item),
-        headers: { 'Content-Type': 'application/json' }
-      });
-      e.target.reset();
-      loadInventory();
-    });
-
-    loadInventory();
-  </script>
-</body>
-</html>
