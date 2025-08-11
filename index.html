@@ -1,25 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Archive 47 Inventory Dashboard | Tactical Gear & Status Tracker</title>
-  <link rel="icon" href="https://i.imgur.com/Ry4xRFK.png" />
-  <style>
-    body {
-      font-family: 'Courier New', monospace;
-      background-color: #0f1113;
-      color: #e0e0e0;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      color: #00ff99;
-      margin-bottom: 30px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background-color: #1a1c1f;
-    }
+function doGet(e) {
+  if (e && e.parameter && e.parameter.format === 'json') {
+    return getSheetDataAsJson();
+  }
+
+  return HtmlService
+    .createHtmlOutputFromFile('HTML')
+    .setTitle('Archive 47 Inventory')
+    .setFaviconUrl('https://i.imgur.com/Ry4xRFK.png');
+}
+
+function getSheetDataAsJson() {
+  const sheet = SpreadsheetApp.openById('1bUnhcWN-o4n2NnreiOQKQfWi3jTuqGIss-euVeNiwgo').getSheetByName('Sheet1');
+  const data = sheet.getDataRange().getValues();
+  return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(ContentService.MimeType.JSON);
+}
+
